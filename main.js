@@ -1,4 +1,4 @@
-const { app, WebContentsView, BrowserWindow, ipcMain } = require('electron');
+const { app, WebContentsView, BrowserWindow, ipcMain, ipcRenderer } = require('electron');
 const path = require('node:path');
 
 app.whenReady().then(() => {
@@ -67,6 +67,20 @@ app.whenReady().then(() => {
 
   ipcMain.handle('current-url', () => {
     return view.webContents.getURL();
+  });
+
+  //On récupère l'URL de la page web rendue
+  view.webContents.on('did-naviagte-in-page', (event, url) => {
+    console.log(`Navigation started to: ${url}`);
+    //Envoyer l'URL à la barre d'outils
+    win.webContents.send('url-changed',url);
+  });
+
+  view.webContents.on('did-stop-loading', () => {
+    const url = view.webContents.getURL();
+    console.log(`Navigation started to: ${url}`);
+    //Envoyer l'URL à la barre d'outils
+    win.webContents.send('url-changed',url);
   });
 
   //Register events handling from the main windows
