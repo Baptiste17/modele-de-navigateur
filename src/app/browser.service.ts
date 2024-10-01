@@ -12,6 +12,14 @@ export class BrowserService {
 // @ts-ignore
   electronAPI = window.electronAPI;
 
+  constructor() { }
+
+  backHome() {
+    this.electronAPI.backHome();
+    this.goToPage(this.url);
+    this.updateHistory();
+  }
+
   toogleDevTool() {
     this.electronAPI.toogleDevTool();
   }
