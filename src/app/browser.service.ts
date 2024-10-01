@@ -16,7 +16,7 @@ export class BrowserService {
 
   backHome() {
     this.electronAPI.backHome();
-    this.goToPage(this.url);
+    this.goToPage('https://amiens.unilasalle.fr');
     this.updateHistory();
   }
 
