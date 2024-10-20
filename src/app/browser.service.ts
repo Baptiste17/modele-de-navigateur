@@ -49,7 +49,6 @@ export class BrowserService {
     this.electronAPI.currentUrl()
       .then((url: string) => {
         this.url = url;
-        this.checkUrl(url);
       });
   }
 
@@ -61,12 +60,6 @@ export class BrowserService {
 
     this.electronAPI.canGoForward()
       .then((canGoForward: boolean) => this.canGoForward = canGoForward);
-  }
-
-  checkUrl(url: string) {
-    if (url.startsWith('http://')) {
-      this.electronAPI.openHttpWarningDialog(); // Ouvre la modale d'avertissement HTTP
-    }
   }
 
 }

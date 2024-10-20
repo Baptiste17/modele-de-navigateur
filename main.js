@@ -133,7 +133,7 @@ app.whenReady().then(() => {
     fitViewToWin();
   });
 
-  // Fonction pour ouvrir une fenêtre modale
+  // Fonction pour ouvrir une fenêtre
   function openDialog() {
     if (dialogWindow) {
       dialogWindow.close();
