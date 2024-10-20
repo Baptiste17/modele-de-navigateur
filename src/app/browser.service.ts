@@ -65,7 +65,7 @@ export class BrowserService {
 
   checkUrl(url: string) {
     if (url.startsWith('http://')) {
-      this.electronAPI.openHttpWarningModal(); // Ouvre la modale d'avertissement HTTP
+      this.electronAPI.openHttpWarningDialog(); // Ouvre la modale d'avertissement HTTP
     }
   }
 

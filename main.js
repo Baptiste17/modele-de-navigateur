@@ -2,7 +2,7 @@ const { app, WebContentsView, BrowserWindow, ipcMain, ipcRenderer } = require('e
 const path = require('node:path');
 const axios = require('axios');
 
-let modalWindow;
+let dialogWindow;
 
 app.whenReady().then(() => {
 
@@ -76,7 +76,7 @@ app.whenReady().then(() => {
         const httpUrl = `http://${urlWithoutProtocol}`;
         return checkUrl(httpUrl) // Si HTTPS échoue, tester HTTP
           .then(() => {
-            openModal();
+            openDialog();
             return view.webContents.loadURL(httpUrl); // Si HTTP fonctionne, retourner cette URL
           })
           .catch(() => {
@@ -134,12 +134,12 @@ app.whenReady().then(() => {
   });
 
   // Fonction pour ouvrir une fenêtre modale
-  function openModal() {
-    if (modalWindow) {
-      modalWindow.close();
+  function openDialog() {
+    if (dialogWindow) {
+      dialogWindow.close();
     }
 
-    modalWindow = new BrowserWindow({
+    dialogWindow = new BrowserWindow({
       parent: win,
       modal: true,
       width: 400,
@@ -150,9 +150,9 @@ app.whenReady().then(() => {
       }
     });
 
-    modalWindow.loadFile(path.join(__dirname, 'src/app/dialog-security/dialog-security.component.html'));
-    modalWindow.once('ready-to-show', () => {
-      modalWindow.show();
+    dialogWindow.loadFile(path.join(__dirname, 'src/app/dialog-security/dialog-security.component.html'));
+    dialogWindow.once('ready-to-show', () => {
+      dialogWindow.show();
     });
   }
 })
