@@ -2,6 +2,8 @@ const { app, WebContentsView, BrowserWindow, ipcMain, ipcRenderer } = require('e
 const path = require('node:path');
 const axios = require('axios');
 
+let modalWindow;
+
 app.whenReady().then(() => {
 
   // BrowserWindow initiate the rendering of the angular toolbar
@@ -74,6 +76,7 @@ app.whenReady().then(() => {
         const httpUrl = `http://${urlWithoutProtocol}`;
         return checkUrl(httpUrl) // Si HTTPS échoue, tester HTTP
           .then(() => {
+            openModal();
             return view.webContents.loadURL(httpUrl); // Si HTTP fonctionne, retourner cette URL
           })
           .catch(() => {
@@ -129,5 +132,28 @@ app.whenReady().then(() => {
   win.on('resized', () => {
     fitViewToWin();
   });
+
+  // Fonction pour ouvrir une fenêtre modale
+  function openModal() {
+    if (modalWindow) {
+      modalWindow.close();
+    }
+
+    modalWindow = new BrowserWindow({
+      parent: win,
+      modal: true,
+      width: 400,
+      height: 200,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      }
+    });
+
+    modalWindow.loadFile(path.join(__dirname, 'src/app/dialog-security/dialog-security.component.html'));
+    modalWindow.once('ready-to-show', () => {
+      modalWindow.show();
+    });
+  }
 })
 

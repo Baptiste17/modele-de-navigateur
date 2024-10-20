@@ -7,13 +7,14 @@ import { ForwardComponent } from './forward/forward.component';
 import { RefreshComponent } from './refresh/refresh.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HomeButtonComponent} from './home-button/home-button.component';
+import { DialogSecurityComponent } from "./dialog-security/dialog-security.component";
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, AddressComponent, BackwardComponent, DebugComponent, ForwardComponent, RefreshComponent, HomeButtonComponent],
+  imports: [RouterOutlet, MatToolbarModule, AddressComponent, BackwardComponent, DebugComponent, ForwardComponent, RefreshComponent, HomeButtonComponent, DialogSecurityComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

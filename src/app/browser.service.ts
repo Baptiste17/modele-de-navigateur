@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogSecurityComponent } from './dialog-security/dialog-security.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrowserService {
 
+  constructor(private dialog: MatDialog) {}  // Injection correcte de MatDialog
+
   url = 'https://amiens.unilasalle.fr';
   canGoBack = false;
   canGoForward = false;
 
-// @ts-ignore
+  // @ts-ignore
   electronAPI = window.electronAPI;
-
-  constructor() { }
 
   backHome() {
     this.electronAPI.backHome();
@@ -45,8 +47,9 @@ export class BrowserService {
 
   setToCurrentUrl() {
     this.electronAPI.currentUrl()
-      .then((url :string) => {
+      .then((url: string) => {
         this.url = url;
+        this.checkUrl(url);
       });
   }
 
@@ -54,9 +57,16 @@ export class BrowserService {
     this.setToCurrentUrl();
 
     this.electronAPI.canGoBack()
-      .then((canGoBack : boolean) => this.canGoBack = canGoBack);
+      .then((canGoBack: boolean) => this.canGoBack = canGoBack);
 
     this.electronAPI.canGoForward()
-      .then((canGoForward : boolean) => this.canGoForward = canGoForward);
+      .then((canGoForward: boolean) => this.canGoForward = canGoForward);
   }
+
+  checkUrl(url: string) {
+    if (url.startsWith('http://')) {
+      this.electronAPI.openHttpWarningModal(); // Ouvre la modale d'avertissement HTTP
+    }
+  }
+
 }

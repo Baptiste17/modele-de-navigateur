@@ -1,0 +1,4 @@
+.custom-dialog {
+  z-index: 10000 !important; /* Un index très élevé */
+  position: relative !important; /* Forcer la position à relative */
+}

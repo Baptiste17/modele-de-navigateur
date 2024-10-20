@@ -14,3 +14,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onUrlChanged: (callback) => ipcRenderer.on('url-changed', callback)
 })
 window.location.href = this.url;
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  openHttpWarningModal: () => ipcRenderer.send('open-http-warning-modal')
+});
